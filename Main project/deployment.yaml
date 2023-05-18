@@ -1,0 +1,20 @@
+ apiVersion: apps/v1
+ kind: Deployment
+ metadata:
+   name: pixel-perfections
+ spec:
+   replicas: 5
+   selector:
+     matchLabels:
+       app: pixel-perfections
+   template:
+     metadata:
+       labels:
+         app: pixel-perfections
+     spec:
+       containers:
+       - name: pixel-perfections
+         image: us.icr.io/pixel_perfections/mycluster-free
+         imagePullPolicy: Always
+         ports:
+         - containerPort: 5000

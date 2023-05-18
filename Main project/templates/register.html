@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photogram</title>
+    <link rel="stylesheet" href="static/style.css">
+    <style>
+        .wrapper {
+            position: relative;
+            border-top: 200px;
+            width: 400px;
+            height: 520px;
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, .5);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            /* transform: scale(0); */
+            transition: height .2s ease;
+            /* transition: transform .18s ease; */
+
+        }
+        h4{
+            margin-top: 15cm;
+        }
+    </style>
+
+</head>
+
+<body>
+    <header>
+        <h2 class="text">Pixel Perfection</h2>
+        <nav class="navigation">
+            <a href="/">Home</a>
+            <a href="service.html">Service</a>
+            <a href="contact.html">Contact</a>
+            <a href="login.html">Login</a>
+        </nav>
+    </header>
+    <div class="wrapper">
+        <div class="form-box registration">
+            <a href="/">
+                <spam class="icon-close">
+                    <f class="fa-solid fa-xmark"></f>
+                </spam>
+            </a>
+            <h2><u>Registration</u></h2>
+            <form action="/register" method="post">
+                <div class="input-box">
+                    <span class="icon"><i class="fa-solid fa-user"></i></span>
+                    <input type="text"name="Username" required>
+                    <label>Username</label>
+                </div>
+                <div class="input-box">
+                    <span class="icon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                    <input type="email"name="Email" required>
+                    <label>Email</label>
+                </div>
+                <div class="input-box">
+                    <span class="icon"><i class="fa fa-lock" aria-hidden="true"></i></span>
+                    <input type="Password"name="Password" required>
+                    <label>Password</label>
+                </div>
+                <div class="remember-forgot">
+                    <label><input type="checkbox"> I agree to the terms and conditions</label>
+
+                </div>
+                <a href="login.html"><button type="" class="btn">Register</button></a>
+                <div class="login-register">
+                    <p>Already have an account? <a href="login.html" class="login-link">Login</a></p>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <h4>{{msg}}</h4>
+    <div class="footer">
+        <p>&copy; 2023 editing App
+        </p>
+    </div>
+    </div>
+    <script>
+        window.watsonAssistantChatOptions = {
+            integrationID: "848af285-05d0-4150-9d7f-111c980b639d", // The ID of this integration.
+            region: "us-south", // The region your integration is hosted in.
+            serviceInstanceID: "c6ebdf72-a787-4b0e-a637-c6160b840de0", // The ID of your service instance.
+            onLoad: function (instance) { instance.render(); }
+        };
+        setTimeout(function () {
+            const t = document.createElement('script');
+            t.src = "https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
+            document.head.appendChild(t);
+        });
+    </script>
+    <script src="static/script.js"></script>
+    <script src="https://kit.fontawesome.com/02323c82aa.js" crossorigin="anonymous"></script>
+
+
+
+</body>
+
+</html>

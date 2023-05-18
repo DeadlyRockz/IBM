@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image resizer</title>
+    <link rel="stylesheet" href="static/style.css">
+    <style>
+        *{
+            color: white;
+        }
+        .btn{
+            position:fixed;
+            width: 100px;
+            background-color: gray;
+            margin-left: -20cm;
+            margin-bottom: -1cm;
+        }
+        #we{
+            position: absolute;
+            margin-top: -13cm;
+
+        }
+        #upload{
+            position: fixed;
+            margin-left: -20cm;
+            margin-top: -6cm;
+        }
+        #scal{
+            position: fixed;
+            margin-left: -25.2cm;
+            margin-bottom: 2cm;
+        }
+        #scale{
+            color: black;
+            position: fixed;
+            margin-left: -19cm;
+            margin-bottom:2cm;
+        }
+        #preview {
+            margin-right: -16cm;
+            max-width: 1000px;
+            max-height: 1000px;
+    
+        }
+        #downloadLink{
+            position:fixed;
+            margin-left: -21cm;
+            margin-bottom:-4cm;
+            
+        }
+    </style>
+
+</head>
+
+<body>
+    <header>
+        <h2 class="text">Pixel Perfection</h2>
+        <nav class="navigation">
+            
+            <a href="about.html">About</a>
+            <a href="service.html">Service</a>
+            <a href="contact.html">Contact</a>
+            <a href="/">log out</a>
+        </nav>
+    </header>
+   
+    <h1 class="text" id="we">Image Resizer</h1>
+    <input type="file" id="upload" accept="image/*">
+    <br><br><br>
+    <label for="scale" id="scal">Scale:</label>
+    <input type="number" id="scale" min="0.1" step="0.1" value="1">
+    <br><br>
+    <button onclick="resizeImage()"class="btn">Resize</button>
+    <br><br>
+    <a id="downloadLink" >Download Resized Image</a>
+    <br><br>
+    <img id="preview" src="#" alt="Preview">
+    <script>
+        document.getElementById('upload').addEventListener('change', function(e) {
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                var img = new Image();
+                img.onload = function() {
+                    document.getElementById('preview').src = this.src;
+                }
+                img.src = event.target.result;
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        });
+
+        function resizeImage() {
+            var preview = document.getElementById('preview');
+            var scale = parseFloat(document.getElementById('scale').value);
+            var canvas = document.createElement("canvas");
+            var ctx = canvas.getContext("2d");
+            canvas.width = preview.width * scale;
+            canvas.height = preview.height * scale;
+            ctx.drawImage(preview, 0, 0, canvas.width, canvas.height);
+            var resizedDataURL = canvas.toDataURL();
+            document.getElementById('preview').src = resizedDataURL;
+            document.getElementById('downloadLink').href = resizedDataURL;
+            document.getElementById('downloadLink').download = 'resized_image.png';
+            document.getElementById('downloadLink').style.display = 'inline';
+        }
+    </script>
+	<div class="footer">
+        <p>&copy; 2023 editing App<center><h3>{{msg}}</h3></center></p>
+    </div>
+    </div>
+    <script>
+        window.watsonAssistantChatOptions = {
+          integrationID: "848af285-05d0-4150-9d7f-111c980b639d", // The ID of this integration.
+          region: "us-south", // The region your integration is hosted in.
+          serviceInstanceID: "c6ebdf72-a787-4b0e-a637-c6160b840de0", // The ID of your service instance.
+          onLoad: function(instance) { instance.render(); }
+        };
+        setTimeout(function(){
+          const t=document.createElement('script');
+          t.src="https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
+          document.head.appendChild(t);
+        });
+      </script>
+    <script src="https://kit.fontawesome.com/02323c82aa.js" crossorigin="anonymous"></script>
+
+
+
+</body>
+
+</html>
