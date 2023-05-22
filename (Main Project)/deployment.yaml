@@ -14,7 +14,7 @@
      spec:
        containers:
        - name: pixel-perfections
-         image: us.icr.io/pixel_perfections/mycluster-free
+         image: us.icr.io/pixel-perfections/mycluster-free
          imagePullPolicy: Always
          ports:
          - containerPort: 5000

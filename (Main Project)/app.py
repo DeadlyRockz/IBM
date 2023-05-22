@@ -4,7 +4,7 @@ import re
 
 app = Flask(__name__)
 app.secret_key = 'a'
-con = ibm_db.connect("DATABASE=bludb;HOSTNAME=fbd88901-ebdb-4a4f-a32e-9822b9fb237b.c1ogj3sd0tgtu0lqde00.databases.appdomain.cloud;PORT=32731;SECURITY=SSL;SSLServerCertificate=DigiCertGlobalRootCA.crt;UID=wyh10210;PWD=7pHZf8MoRZs1izdd;", "", "")
+con = ibm_db.connect("DATABASE=bludb;HOSTNAME=ba99a9e6-d59e-4883-8fc0-d6a8c9f7a08f.c1ogj3sd0tgtu0lqde00.databases.appdomain.cloud;PORT=31321;SECURITY=SSL;SSLServerCertificate=DigiCertGlobalRootCA.crt;UID=wqd44380;PWD=ZGAY0zzp9A9BX9ys", "", "")
 print("connection successful")
 
 @app.route('/')
@@ -28,9 +28,12 @@ def service():
 @app.route('/contact.html')
 def contact():
     return render_template('contact.html')
-@app.route('/img')
+@app.route('/img_resizer.html')
 def img_res():
     return render_template('img_resizer.html')
+@app.route('/img_beauty.html')
+def img_bt():
+    return render_template('img_beauty.html')
 
 @app.route('/login',methods=['POST'])
 def login():
@@ -42,8 +45,10 @@ def login():
     ibm_db.bind_param(smtp, 2, Password)
     ibm_db.execute(smtp)
     account=ibm_db.fetch_assoc(smtp)
-    if account:
+    if (account):
         return render_template('img_resizer.html')
+    # elif (account!=Email):
+    #     return render_template('login.html',msg='Invalid Email or Password.Otherwise Email not Registered!')
     else:
         return render_template('register.html',msg='You have not registerd yet!')
     
@@ -58,8 +63,15 @@ def register():
     ibm_db.bind_param(prepSql, 2, Email)
     ibm_db.bind_param(prepSql, 3, Password)
     result=ibm_db.execute(prepSql)
-    return render_template('login.html',msg='You have successfully created an account and use this credentials for login')
+    return render_template('login.html',msg='You have successfully created an account and use this credentials for login',name='Welcome '+Username +'!!!!')
+@app.route('/service')
+def servic():
+    return render_template('login.html',msg='Please login to get services')
+@app.route('/fg',methods=['POST'])
+def fg():
+    return render_template('login.html',msg='Sorry, Service Unavailable')
 
+    
 
 
 if __name__=='__main__':

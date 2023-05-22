@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Beautification</title>
+    <link rel="stylesheet" href="static/style.css">
+    <style>
+        * {
+            color: white;
+        }
+
+        #imageUpload {
+            position: absolute;
+            margin-left: -20cm;
+            margin-top: -5cm;
+        }
+
+        #canvas {
+            position: absolute;
+            border: 1px solid white;
+            margin-right: -20cm;
+        }
+
+        #btn {
+            margin-left: -22cm;
+            width: 12%;
+            height: 45px;
+            color: black;
+            background: white;
+            border: none;
+            outline: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 500;
+        }
+
+        .dropbtn {
+            background-color: transparent;
+            color: white;
+            padding: 16px;
+            font-size: 1.1em;
+            border: none;
+            cursor: pointer;
+            padding-left: 1.5cm;
+           
+        }
+
+        /* Dropdown button on hover & focus */
+        .dropbtn:hover,
+        .dropbtn:focus {
+            background-color: transparent;
+            transform-origin: left;
+            transform: scaleX(1);
+
+        }
+
+        /* The container <div> - needed to position the dropdown content */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            background-color: transparent;
+        }
+
+        /* Dropdown Content (Hidden by Default) */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        /* Change color of dropdown links on hover */
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+        .show {
+            display: block;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <header>
+        <h2 class="text">Pixel Perfection</h2>
+        <nav class="navigation">
+
+            <a href="#">About</a>
+            <div class="dropdown">
+                <button onclick="myFunction()" class="dropbtn">Services</button>
+                <div id="myDropdown" class="dropdown-content">
+                    <a href="img_resizer.html">Image Resizer</a>
+                    <a href="img_beauty.html">Image Beautification</a>
+                    <br>
+                </div>
+            </div>
+            <a href="#">Contact</a>
+            <a href="/">Logout</a>
+        </nav>
+    </header>
+    <input type="file" id="imageUpload" placeholder="preview" accept="image/*">
+    <canvas id="canvas"></canvas>
+    <br>
+    <button onclick="beautifyImage()" id="btn">Beautify Image</button>
+
+    <script>
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        var image = new Image();
+
+        document.getElementById('imageUpload').addEventListener('change', handleImage, false);
+
+        function handleImage(e) {
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                image.onload = function () {
+                    var aspectRatio = image.width / image.height;
+                    var maxWidth = 400;
+                    var maxHeight = 400;
+
+                    if (image.width > maxWidth || image.height > maxHeight) {
+                        if (image.width > image.height) {
+                            canvas.width = maxWidth;
+                            canvas.height = maxWidth / aspectRatio;
+                        } else {
+                            canvas.height = maxHeight;
+                            canvas.width = maxHeight * aspectRatio;
+                        }
+                    } else {
+                        canvas.width = image.width;
+                        canvas.height = image.height;
+                    }
+
+                    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+                }
+                image.src = event.target.result;
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        }
+
+        function beautifyImage() {
+            var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            var data = imageData.data;
+            var length = data.length;
+            var brightness = 20; // Adjust brightness value as desired
+
+            // Apply brightness enhancement
+            for (var i = 0; i < length; i += 4) {
+                data[i] += brightness; // Red
+                data[i + 1] += brightness; // Green
+                data[i + 2] += brightness; // Blue
+            }
+
+            ctx.putImageData(imageData, 0, 0);
+        }
+    </script>
+    <div class="footer">
+        <p>&copy; 2023 Editing App</p>
+    </div>
+    </div>
+    <script>
+        function myFunction() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        // Close the dropdown menu if the user clicks outside of it
+        window.onclick = function (event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+    <script>
+        window.watsonAssistantChatOptions = {
+            integrationID: "848af285-05d0-4150-9d7f-111c980b639d", // The ID of this integration.
+            region: "us-south", // The region your integration is hosted in.
+            serviceInstanceID: "c6ebdf72-a787-4b0e-a637-c6160b840de0", // The ID of your service instance.
+            onLoad: function (instance) { instance.render(); }
+        };
+        setTimeout(function () {
+            const t = document.createElement('script');
+            t.src = "https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
+            document.head.appendChild(t);
+        });
+    </script>
+    <script src="https://kit.fontawesome.com/02323c82aa.js" crossorigin="anonymous"></script>
+
+
+
+</body>
+
+</html>
